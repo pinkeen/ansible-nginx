@@ -47,6 +47,17 @@
   with_items: "{{ nginx_vhosts }}"
   notify: Reload nginx
 
+- name: List installed vhost configs
+  shell: ls -1 /etc/nginx/conf.d/ | grep '\.conf$' | sed 's/.....$//'
+  register: nginx_vhost_files
+
+- name: Ensure only configured vhosts are installed
+  file:
+    name: "/etc/nginx/conf.d/{{ item }}.conf"
+    state: absent
+  with_items: "{{ nginx_vhost_files.stdout_lines }}"
+  when: item not in nginx_vhosts|map(attribute='name')
+
 - name: Ensure that nginx is started & enabled
   service:
     name: nginx
