@@ -9,6 +9,22 @@
     name: nginx
     state: installed
 
+- name: Ensure nginx group is present
+  group:
+    gid: 992
+    name: nginx
+    state: present
+
+- name: Ensure nginx user is present
+  user:
+    name: nginx
+    shell: /sbin/nologin
+    group: nginx
+    home: /var/cache/nginx
+    createhome: no
+    uid: 995
+    state: present
+
 - name: Install nginx confg
   template:
     src: nginx.conf
