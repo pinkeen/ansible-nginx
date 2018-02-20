@@ -15,6 +15,8 @@ nginx_vhosts:
 The role makes sure that there are no other vhosts than configured. This means that when you remove or rename
 a vhost you don't have to clean it up manually on the server.
 
+You can disable this feature with `nginx_remove_extra_vhosts: no`
+
 ## Other vars 
 
 Look into `defaults/main.yml`.
