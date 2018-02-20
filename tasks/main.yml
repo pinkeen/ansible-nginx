@@ -66,7 +66,7 @@
   file:
     name: "/etc/nginx/conf.d/{{ item }}.conf"
     state: absent
-  with_items: "{{ nginx_vhost_files.stdout_lines }}"
+  with_items: "{{ nginx_vhost_files.stdout_lines|default([]) }}"
   when: (item not in nginx_vhosts|map(attribute='name')) and nginx_remove_extra_vhosts
 
 - name: Ensure that nginx is started & enabled
