@@ -36,7 +36,7 @@
     dest: "{{ nginx_cert_directory }}/{{ item.ssl_cert | basename }}"
   when: item.ssl_cert|default(False)
   with_items: "{{ nginx_vhosts }}"
-  notify: Restart nginx
+  notify: Reload nginx
 
 - name: Install private keys
   copy:
@@ -45,7 +45,7 @@
     dest: "{{ nginx_cert_directory }}/{{ item.ssl_key | basename }}"
   when: item.ssl_key|default(False)
   with_items: "{{ nginx_vhosts }}"
-  notify: Restart nginx
+  notify: Reload nginx
 
 - name: Install vhost configs
   template:
